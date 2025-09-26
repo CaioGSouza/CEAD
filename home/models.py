@@ -13,8 +13,9 @@ class HomeModels(models.Model):
 class Curso(models.Model):
     titulo = models.CharField(max_length=200)
     descricao_curta = models.TextField(help_text="Descrição que aparece na miniatura do curso.")
-    imagem = models.ImageField(upload_to='cursos/imagens/')
+    imagem = models.ImageField(upload_to='cursos/')
     # Adicione outros campos necessários aqui
 
     def __str__(self):
         return self.titulo
+    
