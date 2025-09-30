@@ -13,7 +13,9 @@ class HomeModels(models.Model):
 class Curso(models.Model):
     titulo = models.CharField(max_length=200)
     descricao_curta = models.TextField(help_text="Descrição que aparece na miniatura do curso.")
+    descricao_completa = models.TextField(blank=True)
     imagem = models.ImageField(upload_to='cursos/')
+    data_inicio = models.DateField(null=True, blank=True)
     # Adicione outros campos necessários aqui
 
     def __str__(self):

@@ -9,50 +9,70 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-  <header>
+<header>
     <div class="container-cabecalho">
-        <img src="{% static 'imagens/logo-fvs.png' %}" alt="Logo FVS" class="logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'imagens/logo-fvs.png' %}" alt="Logo FVS" class="logo">
+        </a>
         <nav class="container-link">
             <a href="#" class="icone">
-                <img src="{% static 'imagens/brazil-flag.png' %}" alt="Bandeira do Brasil" class="flag-icon">
+                <img src="{% static 'imagens/noturno.png' %}" alt="Ícone de noturno" class="noturno-icon">
+            </a>
+            <a href="#" class="icone language-toggle" data-lang="en">
+                <img src="{% static 'imagens/flag_brasil.png' %}" alt="Bandeira do Brasil" class="flag-icon" id="flag-icon">
                 <span class="language-text">Português</span>
             </a>
             <a href="#" class="icone">
                 <img src="{% static 'imagens/user.png' %}" alt="Ícone de usuário" class="user-icon">
                 <span class="user-text">Caio</span>
             </a>
+            <a href="#" class="icone notification-bell">
+                <img src="{% static 'imagens/Bell_pin.png' %}" alt="Ícone de notificação" class="conf-icon">
+            </a>
         </nav>
     </div>
 </header>
 
 <main>
-    <section class="banner"></section>
+    <section class="banner">
+        <div class="banner-conteudo max-width-container">
+            <!-- Conteúdo do banner -->
+        </div>
+    </section>
     <section class="conteiner-cursos">
         <div class="barra-pesquisa">
             <h1 class="cursos-disponiveis">Cursos Disponíveis</h1>
             <div class="botoes-filtro">
-                <input type="text" placeholder="Pesquisar">
-                <button>Ano</button>
-                <button>Mês</button>
+                <input type="text" id="search-input" placeholder="Pesquisar" value="{{ search_query }}">
+                <button id="search-button">Pesquisar</button>
+                <button id="sort-ano" data-sort="ano">Ano</button>
+                <button id="sort-mes" data-sort="mes">Mês</button>
             </div>
         </div>
         <div class="grade-cursos">
-            {% for curso in cursos %}
+            {% for curso in page_obj %}
             <div class="curso-cartao-fora">
                 <img src="{{ curso.imagem.url }}" alt="{{ curso.titulo }}" class="curso-cartao-interno">
                 <div class="container-letras-interno">
                     <h3 class="titulo">{{ curso.titulo }}</h3>
                     <p class="descricao">{{ curso.descricao_curta }}</p>
+                    <a href="{% url 'detalhe' curso.id %}">Ver mais</a>
                 </div>
             </div>
+            {% empty %}
+            <p>Nenhum curso encontrado.</p>
             {% endfor %}
         </div>
         <div class="pagination">
-            <a href="#">&lt;&lt;</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">&gt;&gt;</a>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">&lt;&lt;</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" {% if page_obj.number == num %}class="active"{% endif %}>{{ num }}</a>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">&gt;&gt;</a>
+            {% endif %}
         </div>
     </section>
 </main>
@@ -65,8 +85,111 @@
             <a href="#"><img src="{% static 'imagens/twitter.png' %}" alt="Twitter"></a>
             <a href="#"><img src="{% static 'imagens/logo_youtube.png' %}" alt="YouTube"></a>
         </div>
-        <p class="informacao-rodape">Portal desenvolvido por Assessoria de Desenvolvimento de Sistemas - ADES/INFO<br>
+        <p class="informacao-rodape">Política de Privacidade | Termos de uso<br><br>Portal desenvolvido por Assessoria de Desenvolvimento de Sistemas - ADS/GINFO<br><br>
         Fundação de Vigilância em Saúde do Amazonas, Dra. Rosemary Costa Pinto - FVS/RCP © 2024.<br>
         Todos os direitos reservados.</p>
     </div>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const languageToggle = document.querySelector('.language-toggle');
+        const flagIcon = document.getElementById('flag-icon');
+        const notificationBell = document.querySelector('.notification-bell');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const sortAnoButton = document.getElementById('sort-ano');
+        const sortMesButton = document.getElementById('sort-mes');
+        const translations = {
+            'pt-br': {
+                'Cursos Disponíveis': 'Cursos Disponíveis',
+                'Pesquisar': 'Pesquisar',
+                'Ano': 'Ano',
+                'Mês': 'Mês',
+                'Ver mais': 'Ver mais',
+                'Política de Privacidade': 'Política de Privacidade',
+                'Termos de uso': 'Termos de uso',
+                'Portal desenvolvido por': 'Portal desenvolvido por',
+                'Fundação de Vigilância em Saúde do Amazonas': 'Fundação de Vigilância em Saúde do Amazonas',
+                'Todos os direitos reservados': 'Todos os direitos reservados'
+            },
+            'en': {
+                'Cursos Disponíveis': 'Available Courses',
+                'Pesquisar': 'Search',
+                'Ano': 'Year',
+                'Mês': 'Month',
+                'Ver mais': 'Learn more',
+                'Política de Privacidade': 'Privacy Policy',
+                'Termos de uso': 'Terms of Use',
+                'Portal desenvolvido por': 'Portal developed by',
+                'Fundação de Vigilância em Saúde do Amazonas': 'Amazonas Health Surveillance Foundation',
+                'Todos os direitos reservados': 'All rights reserved'
+            }
+        };
+
+        let currentLang = 'pt-br';
+
+        // Função para redirecionar com parâmetros
+        function updateURL(search = '', sort = '') {
+            let url = '?';
+            if (search) url += `search=${encodeURIComponent(search)}`;
+            if (sort) url += `${search ? '&' : ''}sort=${sort}`;
+            window.location.href = window.location.pathname + url;
+        }
+
+        // Pesquisa
+        searchButton.addEventListener('click', function() {
+            updateURL(searchInput.value);
+        });
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                updateURL(searchInput.value);
+            }
+        });
+
+        // Ordenação por Ano
+        sortAnoButton.addEventListener('click', function() {
+            updateURL(searchInput.value, 'ano');
+        });
+
+        // Ordenação por Mês
+        sortMesButton.addEventListener('click', function() {
+            updateURL(searchInput.value, 'mes');
+        });
+
+        // Troca de idioma
+        languageToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            currentLang = currentLang === 'pt-br' ? 'en' : 'pt-br';
+            const languageText = this.querySelector('.language-text');
+            languageText.textContent = currentLang === 'en' ? 'English' : 'Português';
+
+            flagIcon.src = currentLang === 'pt-br' 
+                ? "{% static 'imagens/flag_brasil.png' %}" 
+                : "{% static 'imagens/flag_english.png' %}";
+            flagIcon.alt = currentLang === 'pt-br' ? 'Bandeira do Brasil' : 'Bandeira do Reino Unido';
+
+            document.querySelector('.cursos-disponiveis').textContent = translations[currentLang]['Cursos Disponíveis'];
+            document.querySelector('.barra-pesquisa input').placeholder = translations[currentLang]['Pesquisar'];
+            document.querySelectorAll('.botoes-filtro button')[0].textContent = translations[currentLang]['Ano'];
+            document.querySelectorAll('.botoes-filtro button')[1].textContent = translations[currentLang]['Mês'];
+            document.querySelectorAll('.container-letras-interno a').forEach(a => {
+                a.textContent = translations[currentLang]['Ver mais'];
+            });
+            document.querySelector('.informacao-rodape').innerHTML = `
+                ${translations[currentLang]['Política de Privacidade']} | ${translations[currentLang]['Termos de uso']}<br><br>
+                ${translations[currentLang]['Portal desenvolvido por']} Assessoria de Desenvolvimento de Sistemas - ADS/GINFO<br><br>
+                ${translations[currentLang]['Fundação de Vigilância em Saúde do Amazonas']}, Dra. Rosemary Costa Pinto - FVS/RCP © 2024.<br>
+                ${translations[currentLang]['Todos os direitos reservados']}
+            `;
+        });
+
+        // Notificações
+        notificationBell.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Você tem 2 novas notificações!');
+        });
+    });
+</script>
+</body>
+</html>

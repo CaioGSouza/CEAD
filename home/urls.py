@@ -5,10 +5,9 @@ from . import views
 
 urlpatterns = [
    
-    path("", views.home, name='home')
+    path("", views.home, name='home'),
+    path("detalhe/<int:curso_id>/", views.detalhe, name='detalhe'),  # Detalhe de um curso
+    path("sobre/", views.sobre, name='sobre')
 ]
 
 
-
-    # Exemplo de uma URL futura para a página de detalhes de um curso
-    # path('cursos/<int:curso_id>/', views.detalhe_curso, name='detalhe_curso'),

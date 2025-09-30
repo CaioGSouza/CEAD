@@ -11,27 +11,54 @@ body {
     color: #333;
 }
 
-/* Header */
+
 header {
-    background-color: #fff;
-    padding: 10px 20px;
-    border-bottom: 1px solid #dee2e6;
+     background-color: var(--cor-primaria);
+    color: white;
+    /* Ajuste o primeiro valor (vertical) para centralizar os 100px da logo */
+    /* Se a logo tem 100px, 10px de padding em cima e embaixo é um bom ponto de partida */
+    padding: 10px 0; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.container-cabecalho {
     display: flex;
-    justify-content: space-between;
+    /* space-between funciona perfeitamente para separar Logo (esquerda) e Nav (direita) */
+    justify-content: space-between; 
     align-items: center;
-    position: relative;
-    z-index: 10;
+    padding-right: 25px;
+    padding-bottom: 30px;
 }
 
-.logo {
-    height: 50px;
-}
-
+/* O restante da navegação (container-link) garante que os ícones fiquem juntos na direita */
 .container-link {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 25px; 
 }
+
+/* ... o resto do seu CSS continua ... */
+
+
+    .logo {
+    height: 80px;
+    width: 120px;
+    /* CHAVE: Puxa o elemento para cima, movendo-o para fora da linha de base */
+    margin-top: -40px; 
+    
+    /* 1. SE VOCÊ QUER PUXAR A LOGO UM POUCO MAIS PARA A ESQUERDA (SAIR DO PADDING) */
+    /* Use um valor negativo para anular parte do padding do .max-width-container */
+    /* Exemplo: anula 10px do padding lateral de 40px */
+    margin-left: 30px; 
+    
+    /* 2. SE VOCÊ QUER EMPURRAR A LOGO UM POUCO MAIS PARA A DIREITA (LONGE DA BORDA) */
+    /* margin-left: 10px; */ 
+
+    /* Nota: Mantenha apenas uma das regras acima ou defina como 0. */
+}
+
+
 
 .icone {
     display: flex;
@@ -40,9 +67,43 @@ header {
     color: #333;
 }
 
-.flag-icon, .user-icon {
-    height: 20px;
+.user-icon {
+    
     margin-right: 5px;
+    height: 40px; /* Define um tamanho padrão */
+    width: 40px;
+    margin-top: 4px;
+}
+
+.flag-icon{
+  margin-right: 5px;
+    height: 30px; /* Define um tamanho padrão */
+    width: 30px;
+    margin-top: 4px;
+
+}
+
+.noturno-icon{
+
+ margin-right: 5px;
+    height: 27px; /* Define um tamanho padrão */
+    width: 20px;
+    margin-top: 4px;
+}
+
+.conf-icon{
+
+    margin-top: 12px;
+ margin-right: 5px;
+    height: 30px; /* Define um tamanho padrão */
+    width: 30px;
+
+}
+
+.pagination a.active {
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
 }
 
 .language-text, .user-text {
@@ -50,47 +111,107 @@ header {
 }
 
 /* Banner */
+/* --- Estilos para o Banner --- */
 .banner {
-    height: 200px;
-    background-color: #28a745;
-    background-image: url('{% static "imagens/predio-fvs-2.png" %}');
-    background-size: cover;
-    background-position: center;
-    margin-bottom: 20px;
-    position: relative;
+/* --- Estilos para o Banner (NOVO CÓDIGO CORRIGIDO) --- */
+
+    /* CORREÇÃO: Usando o nome correto do arquivo de imagem. */
+    background-image: url('../imagens/predio-fvs2.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    height: 300px;
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    
+    position: relative; 
+    
+
 }
 
+/* Camada de sobreposição escura para melhorar a legibilidade do texto */
 .banner::before {
     content: '';
-    position: absolute;
-    top: 0;
+    position: absolute; /* Mantenha absolute para cobrir o pai */
+    top: 0; 
     left: 0;
-    width: 100%;
+    width: 100%; 
     height: 100%;
-    background-color: rgba(40, 167, 69, 0.7);
-    z-index: 1;
+    
+    background-color: rgba(26, 128, 70, 0.65); /* Mantenha o seu verde transparente */
+    z-index: 1; 
 }
 
-.banner .logo {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
+.banner-conteudo {
+   z-index: 2; 
+    position: relative; /* Necessário para z-index */
+    
+    display: flex;
+    flex-direction: column; 
+    
+    /* Alinha o conteúdo à esquerda */
+    align-items: flex-start; 
+    
+    /* ESTE PADDING GARANTE O ESPAÇO LONGE DA BORDA DA TELA */
+    padding: 0 50px; 
+    
+    max-width: 1200px; 
+    width: 100%;
+    /* ... o restante do CSS do banner-conteudo ... */
+}
+
+
+.banner-logo {
+    height: 80px; /* Ajuste o tamanho da logo no banner */
+    margin-bottom: 10px;
+    filter: brightness(0) invert(1); /* Deixa a logo branca, se for colorida */
+}
+
+.banner-titulo {
+    font-size: 2.8em; /* Ajuste o tamanho do título */
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+
+.banner-subtitulo {
+    font-size: 1.4em; /* Ajuste o tamanho do subtítulo */
+    font-weight: 300;
 }
 
 /* Seção de Cursos */
 .conteiner-cursos {
+   
+    /* Centraliza e define largura máxima (mantendo o layout) */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    
+    /* Padding interno */
+    padding: 40px 50px; 
+    
+    /* PROPRIEDADES VISUAIS */
+    background-color: white; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    
+    /* Mude o margin-top */
+    /* REMOVA o valor negativo e coloque um valor positivo (ex: 40px) */
+    margin-top: 100px; 
+    
+    margin-bottom: 40px;
+
 }
 
 .cursos-disponiveis {
-    font-size: 28px;
+    .cursos-disponiveis {
+    color: var(--cor-secundaria);
+    font-size: 2em;
     font-weight: 500;
-    margin-bottom: 15px;
-    color: #28a745;
+    
+    /* ADICIONE ESTA LINHA: Empurra o título para a direita, separando-o do campo de pesquisa */
+    margin-right: 50px; /* Você pode ajustar 50px para um valor maior ou menor */
+}
 }
 
 .barra-pesquisa {
@@ -98,6 +219,7 @@ header {
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 
 .botoes-filtro {
@@ -129,6 +251,7 @@ header {
 
 /* Grid de Cursos */
 .grade-cursos {
+    margin-top: 35px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
@@ -178,7 +301,7 @@ header {
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 55px;
     gap: 5px;
 }
 
@@ -197,15 +320,16 @@ header {
 
 /* Footer */
 footer {
-    background-color: #343a40;
+    background-color: #142F3F;
     color: #fff;
     text-align: center;
-    padding: 80px;
-    margin-top: 20px;
+    padding: 20px;
+    margin-top: 100px;
 }
 
 .social-icones {
-    margin-bottom: 10px;
+    margin-bottom: 35px;
+    margin-top: 20px;
 }
 
 .social-icones img {
@@ -214,8 +338,10 @@ footer {
 }
 
 .informacao-rodape {
-    font-size: 12px;
+    font-size: 15px;
 }
+
+
 
 /* Responsivo */
 @media (max-width: 1024px) {
