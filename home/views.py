@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Curso
 from django.core.paginator import Paginator
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm  # Esta linha é essencial
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 # Create your views here.
 
@@ -40,3 +43,38 @@ def detalhe(request, curso_id):
 
 def sobre(request):
     return render(request, 'home/sobre.html')
+
+def cadastro(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cadastro realizado com sucesso! Faça login.')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'home/cadastro.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login realizado com sucesso!')
+                return redirect('home')
+            else:
+                messages.error(request, 'Usuário ou senha inválidos.')
+        else:
+            messages.error(request, 'Formulário inválido.')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'home/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'Você saiu da conta.')
+    return redirect('home')

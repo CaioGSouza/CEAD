@@ -2,43 +2,38 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos FVS</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <title>CEAD</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-<header>
-    <div class="container-cabecalho">
-        <a href="{% url 'home' %}">
-            <img src="{% static 'imagens/logo-fvs.png' %}" alt="Logo FVS" class="logo">
-        </a>
-        <nav class="container-link">
-            <a href="#" class="icone">
-                <img src="{% static 'imagens/noturno.png' %}" alt="Ícone de noturno" class="noturno-icon">
-            </a>
-            <a href="#" class="icone language-toggle" data-lang="en">
-                <img src="{% static 'imagens/flag_brasil.png' %}" alt="Bandeira do Brasil" class="flag-icon" id="flag-icon">
-                <span class="language-text">Português</span>
-            </a>
-            <a href="#" class="icone">
-                <img src="{% static 'imagens/user.png' %}" alt="Ícone de usuário" class="user-icon">
-                <span class="user-text">Caio</span>
-            </a>
-            <a href="#" class="icone notification-bell">
-                <img src="{% static 'imagens/Bell_pin.png' %}" alt="Ícone de notificação" class="conf-icon">
-            </a>
-        </nav>
+    <div class="fvs-main-banner">
+        <header class="fvs-header-completo">
+            <div class="banner top-bar-fvs-ajustada">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'imagens/logo-fvs-white.png' %}" alt="Logo FVS" class="logo">
+                </a>
+                <div class="container-icones">
+                     <a href="#" class="icone">
+                        <img src="{% static 'imagens/noturno.png' %}" alt="Ícone de noturno" class="noturno-icon">
+                    </a>
+                     <a href="#" class="icone language-toggle" data-lang="en">
+                        <img src="{% static 'imagens/flag_brasil.png' %}" alt="Bandeira do Brasil" class="flag-icon" id="flag-icon">
+                        <span class="language-text">Português</span>
+                    </a>
+                     <a href="#" class="icone notification-bell">
+                        <img src="{% static 'imagens/Bell_pin.png' %}" alt="Ícone de notificação" class="conf-icon">
+                    </a>
+                    <a href="#" class="icone">
+                        <img src="{% static 'imagens/user.png' %}" alt="Ícone de usuário" class="user-icon">
+                        <span class="user-text">Caio</span>
+                    </a>
+                </div>
+            </div>
+            <div class="banner-overlay-content">
+                <h1 class="main-title-fvs">CEAD</h1>
+            </div>
+        </header>>
     </div>
-</header>
-
-<main>
-    <section class="banner">
-        <div class="banner-conteudo max-width-container">
-            <!-- Conteúdo do banner -->
-        </div>
-    </section>
     <section class="conteiner-cursos">
         <div class="barra-pesquisa">
             <h1 class="cursos-disponiveis">Cursos Disponíveis</h1>
@@ -56,7 +51,7 @@
                 <div class="container-letras-interno">
                     <h3 class="titulo">{{ curso.titulo }}</h3>
                     <p class="descricao">{{ curso.descricao_curta }}</p>
-                    <a href="{% url 'detalhe' curso.id %}">Ver mais</a>
+                    <a href="{% url 'detalhe' curso.id %}" class="ver-mais">Ver mais...</a>
                 </div>
             </div>
             {% empty %}
@@ -80,10 +75,9 @@
 <footer>
     <div class="container-rodape">
         <div class="social-icones">
-            <a href="#"><img src="{% static 'imagens/instagram.png' %}" alt="Instagram"></a>
-            <a href="#"><img src="{% static 'imagens/logo-facebook.png' %}" alt="Facebook"></a>
-            <a href="#"><img src="{% static 'imagens/twitter.png' %}" alt="Twitter"></a>
-            <a href="#"><img src="{% static 'imagens/logo_youtube.png' %}" alt="YouTube"></a>
+            <a href="https://www.instagram.com/fvs.rcp/"><img src="{% static 'imagens/instagram.png' %}" alt="Instagram"></a>
+            <a href="https://www.facebook.com/fvs.rcp/"><img src="{% static 'imagens/logo-facebook.png' %}" alt="Facebook"></a>
+            <a href="https://www.youtube.com/@fvsamazonas"><img src="{% static 'imagens/logo_youtube.png' %}" alt="YouTube"></a>
         </div>
         <p class="informacao-rodape">Política de Privacidade | Termos de uso<br><br>Portal desenvolvido por Assessoria de Desenvolvimento de Sistemas - ADS/GINFO<br><br>
         Fundação de Vigilância em Saúde do Amazonas, Dra. Rosemary Costa Pinto - FVS/RCP © 2024.<br>

@@ -11,207 +11,137 @@ body {
     color: #333;
 }
 
-
-header {
-     background-color: var(--cor-primaria);
-    color: white;
-    /* Ajuste o primeiro valor (vertical) para centralizar os 100px da logo */
-    /* Se a logo tem 100px, 10px de padding em cima e embaixo é um bom ponto de partida */
-    padding: 10px 0; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 
-.container-cabecalho {
-    display: flex;
-    /* space-between funciona perfeitamente para separar Logo (esquerda) e Nav (direita) */
-    justify-content: space-between; 
-    align-items: center;
-    padding-right: 25px;
-    padding-bottom: 30px;
-}
+/* --- NOVOS ESTILOS FVS PARA O BANNER E NAVEGAÇÃO --- */
 
-/* O restante da navegação (container-link) garante que os ícones fiquem juntos na direita */
-.container-link {
-    display: flex;
-    align-items: center;
-    gap: 25px; 
-}
-
-/* ... o resto do seu CSS continua ... */
-
-
-    .logo {
-    height: 80px;
-    width: 120px;
-    /* CHAVE: Puxa o elemento para cima, movendo-o para fora da linha de base */
-    margin-top: -40px; 
+/* Variáveis de Cores FVS */
+:root {
+    --fvs-text-white: #fff;
+    --fvs-medium-green: #2B6D5E;
+    --fvs-button-green: #5CB85C;
     
-    /* 1. SE VOCÊ QUER PUXAR A LOGO UM POUCO MAIS PARA A ESQUERDA (SAIR DO PADDING) */
-    /* Use um valor negativo para anular parte do padding do .max-width-container */
-    /* Exemplo: anula 10px do padding lateral de 40px */
-    margin-left: 30px; 
-    
-    /* 2. SE VOCÊ QUER EMPURRAR A LOGO UM POUCO MAIS PARA A DIREITA (LONGE DA BORDA) */
-    /* margin-left: 10px; */ 
-
-    /* Nota: Mantenha apenas uma das regras acima ou defina como 0. */
 }
 
+/* Ajusta a barra superior (logo/ícones) para ficar sobre o banner */
+.top-bar-fvs-ajustada {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: calc(100% - 40px); /* Ajusta a largura com margem */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3; /* Fica acima do overlay */
+    box-shadow: none;
+}
 
+.logo {
+margin-top: 15px;
+margin-left: 20px;
 
-.icone {
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.container-icones {
     display: flex;
     align-items: center;
-    text-decoration: none;
-    color: #333;
+    gap: 15px;
 }
 
-.user-icon {
-    
-    margin-right: 5px;
-    height: 40px; /* Define um tamanho padrão */
-    width: 40px;
-    margin-top: 4px;
-}
-
-.flag-icon{
-  margin-right: 5px;
-    height: 30px; /* Define um tamanho padrão */
-    width: 30px;
-    margin-top: 4px;
+.icone img {
+    height: 35px;
+    vertical-align: middle;
 
 }
 
-.noturno-icon{
-
- margin-right: 5px;
-    height: 27px; /* Define um tamanho padrão */
-    width: 20px;
-    margin-top: 4px;
-}
-
-.conf-icon{
-
-    margin-top: 12px;
- margin-right: 5px;
-    height: 30px; /* Define um tamanho padrão */
-    width: 30px;
-
-}
-
-.pagination a.active {
-    background-color: #28a745;
-    color: #fff;
-    font-weight: bold;
+.icone img:hover {
+    opacity: 0.7;
 }
 
 .language-text, .user-text {
-    font-size: 14px;
+    color:white;
+    margin-left: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    
 }
 
-/* Banner */
-/* --- Estilos para o Banner --- */
-.banner {
-/* --- Estilos para o Banner (NOVO CÓDIGO CORRIGIDO) --- */
+.container-icones a {
+    text-decoration: none; /* Remove o sublinhado */
+}
 
-    /* CORREÇÃO: Usando o nome correto do arquivo de imagem. */
-    background-image: url('../imagens/predio-fvs2.png'); 
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    height: 300px;
+/* Banner Principal */
+.fvs-main-banner {
+    height: 350px;
+    background: url('../imagens/predio-fvs2.png') no-repeat center center/cover;
+    position: relative;
     display: flex;
-    align-items: center; 
-    justify-content: flex-start; 
-    
-    position: relative; 
-    
-
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-/* Camada de sobreposição escura para melhorar a legibilidade do texto */
-.banner::before {
+/* Camada de Sobreposição (Overlay) */
+.fvs-main-banner::before {
     content: '';
-    position: absolute; /* Mantenha absolute para cobrir o pai */
-    top: 0; 
+    position: absolute;
+    top: 0;
     left: 0;
-    width: 100%; 
-    height: 100%;
-    
-    background-color: rgba(26, 128, 70, 0.65); /* Mantenha o seu verde transparente */
-    z-index: 1; 
-}
-
-.banner-conteudo {
-   z-index: 2; 
-    position: relative; /* Necessário para z-index */
-    
-    display: flex;
-    flex-direction: column; 
-    
-    /* Alinha o conteúdo à esquerda */
-    align-items: flex-start; 
-    
-    /* ESTE PADDING GARANTE O ESPAÇO LONGE DA BORDA DA TELA */
-    padding: 0 50px; 
-    
-    max-width: 1200px; 
     width: 100%;
-    /* ... o restante do CSS do banner-conteudo ... */
+    height: 100%;
+   background-color: rgba(26, 128, 70, 0.8);
+    z-index: 2; /* Fica abaixo da barra superior, mas acima da imagem */
 }
 
-
-.banner-logo {
-    height: 80px; /* Ajuste o tamanho da logo no banner */
-    margin-bottom: 10px;
-    filter: brightness(0) invert(1); /* Deixa a logo branca, se for colorida */
+/* Conteúdo do Overlay (Título CEAD) */
+.banner-overlay-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
 }
 
-.banner-titulo {
-    font-size: 2.8em; /* Ajuste o tamanho do título */
+.main-title-fvs {
+    color: var(--fvs-text-white);
+    font-size: 3.5rem;
     font-weight: 700;
-    margin-bottom: 5px;
-    line-height: 1.2;
-}
-
-.banner-subtitulo {
-    font-size: 1.4em; /* Ajuste o tamanho do subtítulo */
-    font-weight: 300;
+    letter-spacing: 2px;
+    text-align: center;
+    z-index: 3; /* Fica acima do overlay */
 }
 
 /* Seção de Cursos */
 .conteiner-cursos {
-   
-    /* Centraliza e define largura máxima (mantendo o layout) */
     max-width: 1200px;
     margin: 0 auto;
-    
-    /* Padding interno */
-    padding: 40px 50px; 
-    
-    /* PROPRIEDADES VISUAIS */
-    background-color: white; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
-    
-    /* Mude o margin-top */
-    /* REMOVA o valor negativo e coloque um valor positivo (ex: 40px) */
-    margin-top: 100px; 
-    
+    padding: 40px 50px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
     margin-bottom: 40px;
-
 }
 
 .cursos-disponiveis {
-    .cursos-disponiveis {
     color: var(--cor-secundaria);
     font-size: 2em;
     font-weight: 500;
-    
-    /* ADICIONE ESTA LINHA: Empurra o título para a direita, separando-o do campo de pesquisa */
-    margin-right: 50px; /* Você pode ajustar 50px para um valor maior ou menor */
-}
+    margin-right: 50px;
 }
 
 .barra-pesquisa {
@@ -280,6 +210,19 @@ header {
     flex-direction: column;
     justify-content: center;
 }
+.ver-mais{
+display: inline-block;
+    padding: 10px 20px;
+    color: #1c8534;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    padding-top: 26px;
+    margin-left: -20px;
+    font-size: 12px;
+
+
+}
 
 .titulo {
     font-size: 16px;
@@ -318,7 +261,7 @@ header {
     color: #fff;
 }
 
-/* Footer */
+/* Footer (mantém o estilo original para home.html) */
 footer {
     background-color: #142F3F;
     color: #fff;
@@ -341,7 +284,7 @@ footer {
     font-size: 15px;
 }
 
-
+/* Estilos específicos para a página de detalhes */
 
 /* Responsivo */
 @media (max-width: 1024px) {
